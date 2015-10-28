@@ -69,6 +69,7 @@
             this.panelLONA.Size = new System.Drawing.Size(920, 302);
             this.panelLONA.TabIndex = 0;
             this.panelLONA.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLONA_Paint);
+            this.panelLONA.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelLONA_MouseClick);
             this.panelLONA.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelLONA_MouseMove);
             // 
             // label1

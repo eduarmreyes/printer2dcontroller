@@ -33,7 +33,7 @@ namespace Printer2D_Controller
 
         Bitmap LONA, BMSAVE; Graphics G;
         Pen linea; bool Ocp = false;
-        int X = 0, Y = 0;
+        int X = 0, Y = 0, iClick = 0;
         string eFORMA;
         int[] P;
 
@@ -63,12 +63,12 @@ namespace Printer2D_Controller
             }
             else if (FORMA == "Rectangulo")
             {
-                G.DrawRectangle(linea, new Rectangle(50,50, 300, 250));
+                G.DrawRectangle(linea, new Rectangle(E[0],E[1], E[2], E[3]));
                 panelLONA.Refresh();
             }
             else if (FORMA == "Elipse")
             {
-                G.DrawEllipse(linea, 50, 50, 100, 100);
+                G.DrawEllipse(linea, E[0], E[1], E[2], E[3]);
                 panelLONA.Refresh();
             }
             else if (FORMA == "Arco")
@@ -85,9 +85,9 @@ namespace Printer2D_Controller
 
         private void panelLONA_MouseMove(object sender, MouseEventArgs e)
         {
-            X = (Cursor.Position.X - Form1.ActiveForm.Location.X) - (Form1.ActiveForm.Width - Form1.ActiveForm.ClientRectangle.Width) - panelLONA.Location.X + 8;
-            Y = (Cursor.Position.Y - Form1.ActiveForm.Location.Y) - (Form1.ActiveForm.Height - Form1.ActiveForm.ClientRectangle.Height) - panelLONA.Location.Y + 8;
-
+            System.Drawing.Point pPanelPoint = panelLONA.PointToScreen(Point.Empty);
+            X = Cursor.Position.X - pPanelPoint.X;
+            Y = Cursor.Position.Y - pPanelPoint.Y;
             lb_Info_Pxy.Text = "Eje[cm] X=  " + X + " :: Y=  " + Y;
         }
 
@@ -118,13 +118,11 @@ namespace Printer2D_Controller
         private void btn_Draw_Elip_Click(object sender, EventArgs e)
         {
             eFORMA = "Elipse";
-            DIBUJAR(eFORMA, P);
         }
 
         private void btn_Draw_Rect_Click(object sender, EventArgs e)
         {
             eFORMA = "Rectangulo";
-            DIBUJAR(eFORMA, P);
         }
 
         private void btn_Draw_Arc_Click(object sender, EventArgs e)
@@ -136,12 +134,33 @@ namespace Printer2D_Controller
         private void btn_Draw_Lineas_Click(object sender, EventArgs e)
         {
             eFORMA = "linea";
-            P = new int[4];
-            for (int i = 0; i < 4; i++)
-            {
-                P[i] = i * 25;
-            }            
-            DIBUJAR(eFORMA, P);
+        }
+
+        private void panelLONA_MouseClick(object sender, MouseEventArgs e)
+        {
+            System.Drawing.Point pPoint = panelLONA.PointToScreen(Point.Empty);
+            if (iClick == 0) {
+                if ((new object[] {eFORMA}).Any(v => v == null))
+                {
+                    MessageBox.Show("Por favor elija una opción de dibujo.");
+                }
+                else
+                {
+                    P = new int[4];
+                    P[0] = Cursor.Position.X - pPoint.X;
+                    P[1] = Cursor.Position.Y - pPoint.Y;
+                    iClick++;
+                }
+            } else {
+                P[2] = Cursor.Position.X - pPoint.X;
+                P[3] = Cursor.Position.Y - pPoint.Y;
+                if (eFORMA == "Rectangulo" || eFORMA == "Elipse") {
+                    P[2] = P[2] - P[0];
+                    P[3] = P[3] - P[1];
+                }
+                iClick = 0;
+                DIBUJAR(eFORMA, P);
+            }
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////
