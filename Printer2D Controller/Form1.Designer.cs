@@ -35,7 +35,6 @@
             this.btn_Draw_Lineas = new System.Windows.Forms.Button();
             this.btn_Draw_Poligon = new System.Windows.Forms.Button();
             this.btn_Draw_Elip = new System.Windows.Forms.Button();
-            this.btn_Draw_Arc = new System.Windows.Forms.Button();
             this.btn_ABRIR = new System.Windows.Forms.Button();
             this.btn_GUARDAR = new System.Windows.Forms.Button();
             this.btn_Draw_Line = new System.Windows.Forms.Button();
@@ -54,7 +53,6 @@
             this.btn_Ctrl_COM = new System.Windows.Forms.Button();
             this.btn_Curva_Bezier = new System.Windows.Forms.Button();
             this.btn_Curva = new System.Windows.Forms.Button();
-            this.btn_Texto = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panelLONA
@@ -97,6 +95,7 @@
             this.btnIMPRIMIR.TabIndex = 2;
             this.btnIMPRIMIR.Text = "IMPRIMIR";
             this.btnIMPRIMIR.UseVisualStyleBackColor = false;
+            this.btnIMPRIMIR.Click += new System.EventHandler(this.btnIMPRIMIR_Click);
             // 
             // btn_Draw_Rect
             // 
@@ -122,9 +121,9 @@
             this.btn_Draw_Lineas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Draw_Lineas.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Draw_Lineas.ForeColor = System.Drawing.Color.White;
-            this.btn_Draw_Lineas.Location = new System.Drawing.Point(370, 73);
+            this.btn_Draw_Lineas.Location = new System.Drawing.Point(417, 73);
             this.btn_Draw_Lineas.Name = "btn_Draw_Lineas";
-            this.btn_Draw_Lineas.Size = new System.Drawing.Size(47, 26);
+            this.btn_Draw_Lineas.Size = new System.Drawing.Size(51, 26);
             this.btn_Draw_Lineas.TabIndex = 2;
             this.btn_Draw_Lineas.Text = "Lineas";
             this.btn_Draw_Lineas.UseVisualStyleBackColor = false;
@@ -138,9 +137,9 @@
             this.btn_Draw_Poligon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Draw_Poligon.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Draw_Poligon.ForeColor = System.Drawing.Color.White;
-            this.btn_Draw_Poligon.Location = new System.Drawing.Point(307, 73);
+            this.btn_Draw_Poligon.Location = new System.Drawing.Point(350, 73);
             this.btn_Draw_Poligon.Name = "btn_Draw_Poligon";
-            this.btn_Draw_Poligon.Size = new System.Drawing.Size(57, 26);
+            this.btn_Draw_Poligon.Size = new System.Drawing.Size(61, 26);
             this.btn_Draw_Poligon.TabIndex = 2;
             this.btn_Draw_Poligon.Text = "Poligono";
             this.btn_Draw_Poligon.UseVisualStyleBackColor = false;
@@ -160,22 +159,6 @@
             this.btn_Draw_Elip.Text = "Elipse";
             this.btn_Draw_Elip.UseVisualStyleBackColor = false;
             this.btn_Draw_Elip.Click += new System.EventHandler(this.btn_Draw_Elip_Click);
-            // 
-            // btn_Draw_Arc
-            // 
-            this.btn_Draw_Arc.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.btn_Draw_Arc.FlatAppearance.BorderSize = 0;
-            this.btn_Draw_Arc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(123)))), ((int)(((byte)(122)))));
-            this.btn_Draw_Arc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Draw_Arc.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Draw_Arc.ForeColor = System.Drawing.Color.White;
-            this.btn_Draw_Arc.Location = new System.Drawing.Point(262, 73);
-            this.btn_Draw_Arc.Name = "btn_Draw_Arc";
-            this.btn_Draw_Arc.Size = new System.Drawing.Size(39, 26);
-            this.btn_Draw_Arc.TabIndex = 2;
-            this.btn_Draw_Arc.Text = "Arco";
-            this.btn_Draw_Arc.UseVisualStyleBackColor = false;
-            this.btn_Draw_Arc.Click += new System.EventHandler(this.btn_Draw_Arc_Click);
             // 
             // btn_ABRIR
             // 
@@ -416,7 +399,7 @@
             this.btn_Curva_Bezier.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Curva_Bezier.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Curva_Bezier.ForeColor = System.Drawing.Color.White;
-            this.btn_Curva_Bezier.Location = new System.Drawing.Point(458, 42);
+            this.btn_Curva_Bezier.Location = new System.Drawing.Point(262, 73);
             this.btn_Curva_Bezier.Name = "btn_Curva_Bezier";
             this.btn_Curva_Bezier.Size = new System.Drawing.Size(82, 26);
             this.btn_Curva_Bezier.TabIndex = 2;
@@ -432,29 +415,13 @@
             this.btn_Curva.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Curva.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Curva.ForeColor = System.Drawing.Color.White;
-            this.btn_Curva.Location = new System.Drawing.Point(423, 73);
+            this.btn_Curva.Location = new System.Drawing.Point(458, 42);
             this.btn_Curva.Name = "btn_Curva";
-            this.btn_Curva.Size = new System.Drawing.Size(42, 26);
+            this.btn_Curva.Size = new System.Drawing.Size(46, 26);
             this.btn_Curva.TabIndex = 2;
             this.btn_Curva.Text = "Curva";
             this.btn_Curva.UseVisualStyleBackColor = false;
             this.btn_Curva.Click += new System.EventHandler(this.btn_Draw_Line_Click);
-            // 
-            // btn_Texto
-            // 
-            this.btn_Texto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.btn_Texto.FlatAppearance.BorderSize = 0;
-            this.btn_Texto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(123)))), ((int)(((byte)(122)))));
-            this.btn_Texto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Texto.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Texto.ForeColor = System.Drawing.Color.White;
-            this.btn_Texto.Location = new System.Drawing.Point(471, 73);
-            this.btn_Texto.Name = "btn_Texto";
-            this.btn_Texto.Size = new System.Drawing.Size(40, 26);
-            this.btn_Texto.TabIndex = 2;
-            this.btn_Texto.Text = "Texto";
-            this.btn_Texto.UseVisualStyleBackColor = false;
-            this.btn_Texto.Click += new System.EventHandler(this.btn_Draw_Line_Click);
             // 
             // Form1
             // 
@@ -465,7 +432,6 @@
             this.Controls.Add(this.btn_Draw_Lineas);
             this.Controls.Add(this.lb_Info_Pxy);
             this.Controls.Add(this.cboxCOM);
-            this.Controls.Add(this.btn_Texto);
             this.Controls.Add(this.btn_Curva);
             this.Controls.Add(this.btn_Curva_Bezier);
             this.Controls.Add(this.btn_Draw_Line);
@@ -473,7 +439,6 @@
             this.Controls.Add(this.btn_Draw_Elip);
             this.Controls.Add(this.btn_Ctrl_COM);
             this.Controls.Add(this.btn_Prueba_COM);
-            this.Controls.Add(this.btn_Draw_Arc);
             this.Controls.Add(this.btn_Draw_Poligon);
             this.Controls.Add(this.btnINSERTimg);
             this.Controls.Add(this.btn_Draw_Rect);
@@ -507,7 +472,6 @@
         private System.Windows.Forms.Button btn_Draw_Lineas;
         private System.Windows.Forms.Button btn_Draw_Poligon;
         private System.Windows.Forms.Button btn_Draw_Elip;
-        private System.Windows.Forms.Button btn_Draw_Arc;
         private System.Windows.Forms.Button btn_ABRIR;
         private System.Windows.Forms.Button btn_GUARDAR;
         private System.Windows.Forms.Button btn_Draw_Line;
@@ -526,7 +490,6 @@
         private System.Windows.Forms.Button btn_Ctrl_COM;
         private System.Windows.Forms.Button btn_Curva_Bezier;
         private System.Windows.Forms.Button btn_Curva;
-        private System.Windows.Forms.Button btn_Texto;
     }
 }
 

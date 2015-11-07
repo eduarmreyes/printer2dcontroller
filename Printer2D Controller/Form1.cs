@@ -42,6 +42,8 @@ namespace Printer2D_Controller
 
         public bool PuertoSerial(string cmd)
         {
+            panelLONA.ToString();
+            COM = new System.IO.Ports.SerialPort(cboxCOM.Text, 9600);
             if (COM.IsOpen)
             {
                 COM.Write(cmd);
@@ -55,27 +57,38 @@ namespace Printer2D_Controller
         }
 
         public void DIBUJAR(string FORMA, int[] E)
-        {           
-            if (FORMA == "linea" && E.Length == 4)
+        {
+            switch (FORMA)
             {
-                G.DrawLine(linea, new Point(E[0], E[1]), new Point(E[2], E[3]));
-                panelLONA.Refresh();               
+                case "linea":
+                    G.DrawLine(linea, new Point(E[0], E[1]), new Point(E[2], E[3]));
+                    panelLONA.Refresh();
+                    break;
+                case "Rectangulo":
+                    G.DrawRectangle(linea, new Rectangle(E[0],E[1], E[2], E[3]));
+                    panelLONA.Refresh();
+                    break;
+                case "Elipse":
+                    G.DrawEllipse(linea, E[0], E[1], E[2], E[3]);
+                    panelLONA.Refresh();
+                    break;
+                default:
+                    MessageBox.Show("Debes seleccionar una opción de dibujo","Error",
+                        MessageBoxButtons.OK,MessageBoxIcon.Error,
+                        MessageBoxDefaultButton.Button1,MessageBoxOptions.ServiceNotification);
+                    break;
+
             }
-            else if (FORMA == "Rectangulo")
-            {
-                G.DrawRectangle(linea, new Rectangle(E[0],E[1], E[2], E[3]));
-                panelLONA.Refresh();
-            }
-            else if (FORMA == "Elipse")
-            {
-                G.DrawEllipse(linea, E[0], E[1], E[2], E[3]);
-                panelLONA.Refresh();
-            }
-            else if (FORMA == "Arco")
-            {
-                G.DrawArc(linea, new Rectangle(50, 50, 100, 100), 0, 120); 
-                panelLONA.Refresh();
-            }
+            //if (FORMA == "Arco")
+            //{
+            //    // E[4] = startAngle
+            //    // E[5] = sweepAngle
+            //    // G.DrawArc(linea, new Rectangle(E[0], E[1], E[2], E[3]), 0, 120);
+            //    // G.DrawArc(linea, 0, 0, 100, 100, 0, 120);
+            //    G.DrawArc(linea, new Rectangle(0, 0, 100, 100), 0, 0);
+            //    // G.DrawArc(linea, new Rectangle(E[0], E[1], E[2], E[3]), E[4], E[5]);
+            //    panelLONA.Refresh();
+            //}
 
             if (Ocp == false)
             {
@@ -128,7 +141,6 @@ namespace Printer2D_Controller
         private void btn_Draw_Arc_Click(object sender, EventArgs e)
         {
             eFORMA = "Arco";
-            DIBUJAR(eFORMA, P);
         }
 
         private void btn_Draw_Lineas_Click(object sender, EventArgs e)
@@ -142,11 +154,13 @@ namespace Printer2D_Controller
             if (iClick == 0) {
                 if ((new object[] {eFORMA}).Any(v => v == null))
                 {
-                    MessageBox.Show("Por favor elija una opción de dibujo.");
+                    MessageBox.Show("Debes seleccionar una opción de dibujo","Error",
+                        MessageBoxButtons.OK,MessageBoxIcon.Error,
+                        MessageBoxDefaultButton.Button1,MessageBoxOptions.ServiceNotification);
                 }
                 else
                 {
-                    P = new int[4];
+                    P = new int[6];
                     P[0] = Cursor.Position.X - pPoint.X;
                     P[1] = Cursor.Position.Y - pPoint.Y;
                     iClick++;
@@ -154,12 +168,46 @@ namespace Printer2D_Controller
             } else {
                 P[2] = Cursor.Position.X - pPoint.X;
                 P[3] = Cursor.Position.Y - pPoint.Y;
-                if (eFORMA == "Rectangulo" || eFORMA == "Elipse") {
-                    P[2] = P[2] - P[0];
-                    P[3] = P[3] - P[1];
+                switch (eFORMA)
+                {
+                    case "linea":
+                        break;
+                    case "Rectangulo":
+                    case "Elipse" :
+                        P[2] = P[2] - P[0];
+                        P[3] = P[3] - P[1];
+                        break;
+                    case "Arco":
+                        double radian = 0;
+                        double a, b;
+                        a = P[1] - P[0];
+                        b = P[3] - P[2];
+                        radian = (a) / (b);
+                        double degrees = 0;
+                        degrees = radian * 180 / Math.PI;
+                        P[4] = 0;
+                        // P[5] = (int) degrees;
+                        P[5] = 120;
+                        break;
+                    default:
+                        MessageBox.Show("Por favor elija una opción de dibujo.");
+                        break;
                 }
                 iClick = 0;
                 DIBUJAR(eFORMA, P);
+            }
+        }
+
+        private void btnIMPRIMIR_Click(object sender, EventArgs e)
+        {
+            string sDraw = panelLONA.ToString();
+            if (PuertoSerial(sDraw))
+            {
+                MessageBox.Show("Impreso");
+            }
+            else
+            {
+                MessageBox.Show("No se imprimio. COM usado: " + cboxCOM.Text);
             }
         }
 
